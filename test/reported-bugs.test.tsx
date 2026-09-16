@@ -185,3 +185,23 @@ describe("#38 — large inputs are slow / crash", () => {
     expect(elapsed).toBeLessThan(5000);
   });
 });
+
+describe("#100 — leftTitle and rightTitle are clipped in the header", () => {
+  // https://github.com/Aeolun/react-diff-viewer-continued/issues/100
+  it("renders title text with no vertical margin so it fits the title block", () => {
+    const { container } = render(
+      <DiffViewer
+        oldValue={"a\nb"}
+        newValue={"a\nc"}
+        leftTitle="before"
+        rightTitle="after"
+      />,
+    );
+    const title = Array.from(container.querySelectorAll("pre")).find(
+      (p) => p.textContent === "before",
+    );
+    // happy-dom applies no UA stylesheet and does no layout, so this asserts
+    // the reset is emitted, not the absence of visual clipping.
+    expect(window.getComputedStyle(title!).marginTop).toBe("0px");
+  });
+});

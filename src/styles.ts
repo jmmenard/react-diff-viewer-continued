@@ -268,6 +268,7 @@ export default (
     fontFamily: "monospace",
     lineBreak: "anywhere",
     textDecoration: "none",
+    margin: 0,
     label: "content-text",
   });
 
